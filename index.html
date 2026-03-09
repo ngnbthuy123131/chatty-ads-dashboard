@@ -32745,8 +32745,14 @@ const CAMPS = ['camp1','camp2','camp3','camp4'];
 const CAMP_NAMES = {camp1:'VN',camp2:'Competitor',camp3:'Broad 4 Countries',camp4:'Exact Other Countries'};
 const COLORS = {camp1:'#FF6363',camp2:'#FFD200',camp3:'#00C9A7',camp4:'#6C5CE7'};
 const CAMP_BADGE = {camp1:'badge-camp1',camp2:'badge-camp2',camp3:'badge-camp3',camp4:'badge-camp4'};
-// Bid thresholds for suggestions
-const GOOD_CPI = {camp1:10, camp2:6, camp3:12, camp4:10};
+// CPI targets per campaign (Carla's targets ±$0.5)
+const CPI_TARGETS = {
+  camp1: { min: 2.5, target: 3.25, max: 4.0 },
+  camp2: { min: 2.2, target: 3.1,  max: 4.0 },
+  camp3: { min: 5.5, target: 7.0,  max: 8.5 },
+  camp4: { min: 4.5, target: 6.0,  max: 7.5 },
+};
+const GOOD_CPI = {camp1:3.5, camp2:3.5, camp3:8.0, camp4:7.0};
 const WASTE_SPEND = 3; // $3+ spend with 0 installs = flag
 
 let charts = {};
@@ -32875,14 +32881,43 @@ function renderReport(){
   let totalSpend=0,totalInstalls=0;
   CAMPS.forEach(c=>{const d=getMonthData(c,month);if(d){totalSpend+=d.totalSpend;totalInstalls+=d.totalInstalls;}});
   const avgCPI=totalInstalls>0?totalSpend/totalInstalls:0;
+  const overallStatus=avgCPI<=7?'on-target':avgCPI<=8?'warning':'over';
+
+  // CPI health bar per campaign
+  let healthHtml='';
+  CAMPS.forEach(camp=>{
+    const d=getMonthData(camp,month);
+    const t=CPI_TARGETS[camp];
+    if(!d||!t)return;
+    const cpi=d.cpi||0;
+    let status='no-data',statusLabel='No installs',color='#555';
+    if(d.totalInstalls>0){
+      if(cpi<t.min){status='under';statusLabel=`Under target — room to scale`;color='#00e676';}
+      else if(cpi<=t.max){status='ok';statusLabel=`On target`;color='#FFD200';}
+      else{status='over';statusLabel=`Over budget — reduce bids`;color='#ff5252';}
+    }
+    const pct=Math.min(100,cpi>0?(cpi/t.max)*100:0);
+    healthHtml+=`<div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-size:13px;font-weight:600">${CAMP_NAMES[camp]}</span>
+        <span style="font-size:13px;color:${color};font-weight:700">${d.totalInstalls>0?fmt$(cpi):'–'} <span style="font-size:11px;font-weight:400;color:#888">target ${fmt$(t.target)}</span></span>
+      </div>
+      <div style="background:#0f1117;border-radius:6px;height:8px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${color};border-radius:6px;transition:width 0.5s"></div>
+      </div>
+      <div style="font-size:11px;color:${color};margin-top:4px">${statusLabel} &nbsp;·&nbsp; ${d.totalInstalls} installs · ${fmt$(d.totalSpend)} spent</div>
+    </div>`;
+  });
+
   html+=`<div class="monthly-summary">
     <h2>Monthly Report — ${label}</h2>
-    <div class="period">${prevLabel?`vs ${prevLabel} previous month`:''}</div>
-    <div>
+    <div class="period">${prevLabel?`vs ${prevLabel} previous month`:''} &nbsp;·&nbsp; Overall CPI target: <strong>$6–7</strong></div>
+    <div style="margin-bottom:20px">
       <div class="summary-stat"><div class="sv">${fmt$(totalSpend)}</div><div class="sl">Total Spend</div></div>
       <div class="summary-stat"><div class="sv">${totalInstalls}</div><div class="sl">Total Installs</div></div>
-      <div class="summary-stat"><div class="sv">${fmt$(avgCPI)}</div><div class="sl">Avg CPI</div></div>
+      <div class="summary-stat"><div class="sv" style="color:${overallStatus==='on-target'?'#FFD200':overallStatus==='warning'?'#ffa726':'#ff5252'}">${fmt$(avgCPI)}</div><div class="sl">Avg CPI ${overallStatus==='on-target'?'✅':overallStatus==='warning'?'⚠️':'🔴'}</div></div>
     </div>
+    <div style="background:#0f1117;border-radius:10px;padding:16px">${healthHtml}</div>
   </div>`;
 
   const campsToShow=campFilter==='all'?CAMPS:[campFilter];
