@@ -15,10 +15,10 @@ const SLACK_CHANNEL = 'U06G6NV1WH0';
 
 // CPI targets per campaign
 const CPI_TARGETS = {
-  camp1: { min: 2.5, target: 3.25, max: 4.0, name: 'VN' },
-  camp2: { min: 2.2, target: 3.1,  max: 4.0, name: 'Competitor' },
-  camp3: { min: 5.5, target: 7.0,  max: 8.5, name: 'Broad 4 Countries' },
-  camp4: { min: 4.5, target: 6.0,  max: 7.5, name: 'Exact Other Countries' },
+  'VN':                   { min: 3.5, target: 4.25, max: 5.0 },
+  'Competitor':           { min: 3.2, target: 4.1,  max: 5.0 },
+  'Broad':                { min: 6.5, target: 8.0,  max: 9.5 },
+  'Exact':                { min: 5.5, target: 7.0,  max: 8.5 },
 };
 
 // Known ranked keywords (from rank tracker â€” update periodically)
@@ -173,5 +173,6 @@ async function run() {
 }
 
 run().catch(console.error);
+
 
 

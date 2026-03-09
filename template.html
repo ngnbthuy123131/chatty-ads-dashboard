@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -89,15 +89,15 @@ tbody td{padding:10px 12px;color:#ccc}
 </head>
 <body>
 <div class="header">
-  <h1>🟡 Chatty Ads Dashboard</h1>
-  <span>Sep 2025 – Feb 2026 · 4 Campaigns · Historical View</span>
+  <h1>ðŸŸ¡ Chatty Ads Dashboard</h1>
+  <span>Sep 2025 â€“ Feb 2026 Â· 4 Campaigns Â· Historical View</span>
 </div>
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('overview')">📈 Overview</div>
-  <div class="tab" onclick="switchTab('campaign')">🎯 By Campaign</div>
-  <div class="tab" onclick="switchTab('keywords')">🔑 Keywords</div>
-  <div class="tab" onclick="switchTab('changes')">🔄 Changes</div>
-  <div class="tab" onclick="switchTab('report')">📋 Report</div>
+  <div class="tab active" onclick="switchTab('overview')">ðŸ“ˆ Overview</div>
+  <div class="tab" onclick="switchTab('campaign')">ðŸŽ¯ By Campaign</div>
+  <div class="tab" onclick="switchTab('keywords')">ðŸ”‘ Keywords</div>
+  <div class="tab" onclick="switchTab('changes')">ðŸ”„ Changes</div>
+  <div class="tab" onclick="switchTab('report')">ðŸ“‹ Report</div>
 </div>
 <div class="content">
 
@@ -206,14 +206,14 @@ const CAMPS = ['camp1','camp2','camp3','camp4'];
 const CAMP_NAMES = {camp1:'VN',camp2:'Competitor',camp3:'Broad 4 Countries',camp4:'Exact Other Countries'};
 const COLORS = {camp1:'#FF6363',camp2:'#FFD200',camp3:'#00C9A7',camp4:'#6C5CE7'};
 const CAMP_BADGE = {camp1:'badge-camp1',camp2:'badge-camp2',camp3:'badge-camp3',camp4:'badge-camp4'};
-// CPI targets per campaign (Carla's targets ±$0.5)
+// CPI targets per campaign (Carla's targets Â±$0.5)
 const CPI_TARGETS = {
   camp1: { min: 2.5, target: 3.25, max: 4.0 },
   camp2: { min: 2.2, target: 3.1,  max: 4.0 },
   camp3: { min: 5.5, target: 7.0,  max: 8.5 },
   camp4: { min: 4.5, target: 6.0,  max: 7.5 },
 };
-const GOOD_CPI = {camp1:3.5, camp2:3.5, camp3:8.0, camp4:7.0};
+const GOOD_CPI = {camp1:4.5, camp2:4.5, camp3:9.0, camp4:8.0};
 const WASTE_SPEND = 3; // $3+ spend with 0 installs = flag
 
 let charts = {};
@@ -230,7 +230,7 @@ function renderOverview(){
   MONTHS.forEach(m=>{let mi=0;CAMPS.forEach(c=>{const d=getMonthData(c,m);if(d)mi+=d.totalInstalls;});if(mi>bestMonthInstalls){bestMonthInstalls=mi;bestMonth=m;}});
   const avgCPI=totalInstalls>0?totalSpend/totalInstalls:0;
   document.getElementById('kpi-row').innerHTML=`
-    <div class="kpi-card"><div class="label">Total Spend</div><div class="value">${fmt$(totalSpend)}</div><div class="sub">Sep '25 – Feb '26</div></div>
+    <div class="kpi-card"><div class="label">Total Spend</div><div class="value">${fmt$(totalSpend)}</div><div class="sub">Sep '25 â€“ Feb '26</div></div>
     <div class="kpi-card"><div class="label">Total Installs</div><div class="value">${fmtN(totalInstalls)}</div><div class="sub">All campaigns</div></div>
     <div class="kpi-card"><div class="label">Avg CPI</div><div class="value">${fmt$(avgCPI)}</div><div class="sub">All campaigns combined</div></div>
     <div class="kpi-card"><div class="label">Best Month</div><div class="value">${MONTH_LABELS[bestMonth]||'-'}</div><div class="sub">${bestMonthInstalls} installs</div></div>
@@ -321,7 +321,7 @@ function renderChanges(){
     html+=`<div class="change-card"><h3>${CAMP_NAMES[camp]}</h3>`;
     if(newKws.length){html+='<div class="report-block"><span class="report-block-title block-green">New Keywords</span>';newKws.forEach(k=>{const kw=kwB[k];html+=`<div class="change-row"><span>${kw.keyword} <span class="badge ${kw.matchType==='exact'?'badge-exact':'badge-broad'}">${kw.matchType}</span></span><span style="color:#888">${fmt$(kw.bid)}</span></div>`;});html+='</div>';}
     if(dropKws.length){html+='<div class="report-block"><span class="report-block-title block-red">Removed</span>';dropKws.forEach(k=>{const kw=kwA[k];html+=`<div class="change-row"><span>${kw.keyword} <span class="badge ${kw.matchType==='exact'?'badge-exact':'badge-broad'}">${kw.matchType}</span></span><span style="color:#888">${fmt$(kw.bid)}</span></div>`;});html+='</div>';}
-    if(bidChanges.length){html+='<div class="report-block"><span class="report-block-title block-yellow">Bid Changes</span>';bidChanges.forEach(k=>{const a=kwA[k],b=kwB[k];html+=`<div class="change-row"><span>${a.keyword}</span><span>${fmt$(a.bid)} → <strong>${fmt$(b.bid)}</strong></span></div>`;});html+='</div>';}
+    if(bidChanges.length){html+='<div class="report-block"><span class="report-block-title block-yellow">Bid Changes</span>';bidChanges.forEach(k=>{const a=kwA[k],b=kwB[k];html+=`<div class="change-row"><span>${a.keyword}</span><span>${fmt$(a.bid)} â†’ <strong>${fmt$(b.bid)}</strong></span></div>`;});html+='</div>';}
     html+='</div>';
   });
   html+='</div>';
@@ -342,7 +342,7 @@ function renderReport(){
   let totalSpend=0,totalInstalls=0;
   CAMPS.forEach(c=>{const d=getMonthData(c,month);if(d){totalSpend+=d.totalSpend;totalInstalls+=d.totalInstalls;}});
   const avgCPI=totalInstalls>0?totalSpend/totalInstalls:0;
-  const overallStatus=avgCPI<=7?'on-target':avgCPI<=8?'warning':'over';
+  const overallStatus=avgCPI<=9?'on-target':avgCPI<=10.5?'warning':'over';
 
   // CPI health bar per campaign
   let healthHtml='';
@@ -353,30 +353,30 @@ function renderReport(){
     const cpi=d.cpi||0;
     let status='no-data',statusLabel='No installs',color='#555';
     if(d.totalInstalls>0){
-      if(cpi<t.min){status='under';statusLabel=`Under target — room to scale`;color='#00e676';}
+      if(cpi<t.min){status='under';statusLabel=`Under target â€” room to scale`;color='#00e676';}
       else if(cpi<=t.max){status='ok';statusLabel=`On target`;color='#FFD200';}
-      else{status='over';statusLabel=`Over budget — reduce bids`;color='#ff5252';}
+      else{status='over';statusLabel=`Over budget â€” reduce bids`;color='#ff5252';}
     }
     const pct=Math.min(100,cpi>0?(cpi/t.max)*100:0);
     healthHtml+=`<div style="margin-bottom:14px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
         <span style="font-size:13px;font-weight:600">${CAMP_NAMES[camp]}</span>
-        <span style="font-size:13px;color:${color};font-weight:700">${d.totalInstalls>0?fmt$(cpi):'–'} <span style="font-size:11px;font-weight:400;color:#888">target ${fmt$(t.target)}</span></span>
+        <span style="font-size:13px;color:${color};font-weight:700">${d.totalInstalls>0?fmt$(cpi):'â€“'} <span style="font-size:11px;font-weight:400;color:#888">target ${fmt$(t.target)}</span></span>
       </div>
       <div style="background:#0f1117;border-radius:6px;height:8px;overflow:hidden">
         <div style="width:${pct}%;height:100%;background:${color};border-radius:6px;transition:width 0.5s"></div>
       </div>
-      <div style="font-size:11px;color:${color};margin-top:4px">${statusLabel} &nbsp;·&nbsp; ${d.totalInstalls} installs · ${fmt$(d.totalSpend)} spent</div>
+      <div style="font-size:11px;color:${color};margin-top:4px">${statusLabel} &nbsp;Â·&nbsp; ${d.totalInstalls} installs Â· ${fmt$(d.totalSpend)} spent</div>
     </div>`;
   });
 
   html+=`<div class="monthly-summary">
-    <h2>Monthly Report — ${label}</h2>
-    <div class="period">${prevLabel?`vs ${prevLabel} previous month`:''} &nbsp;·&nbsp; Overall CPI target: <strong>$6–7</strong></div>
+    <h2>Monthly Report â€” ${label}</h2>
+    <div class="period">${prevLabel?`vs ${prevLabel} previous month`:''} &nbsp;Â·&nbsp; Overall CPI target: <strong>$6â€“7</strong></div>
     <div style="margin-bottom:20px">
       <div class="summary-stat"><div class="sv">${fmt$(totalSpend)}</div><div class="sl">Total Spend</div></div>
       <div class="summary-stat"><div class="sv">${totalInstalls}</div><div class="sl">Total Installs</div></div>
-      <div class="summary-stat"><div class="sv" style="color:${overallStatus==='on-target'?'#FFD200':overallStatus==='warning'?'#ffa726':'#ff5252'}">${fmt$(avgCPI)}</div><div class="sl">Avg CPI ${overallStatus==='on-target'?'✅':overallStatus==='warning'?'⚠️':'🔴'}</div></div>
+      <div class="summary-stat"><div class="sv" style="color:${overallStatus==='on-target'?'#FFD200':overallStatus==='warning'?'#ffa726':'#ff5252'}">${fmt$(avgCPI)}</div><div class="sl">Avg CPI ${overallStatus==='on-target'?'âœ…':overallStatus==='warning'?'âš ï¸':'ðŸ”´'}</div></div>
     </div>
     <div style="background:#0f1117;border-radius:10px;padding:16px">${healthHtml}</div>
   </div>`;
@@ -407,11 +407,11 @@ function renderReport(){
 
     html+=`<div class="report-card">
       <h3>${CAMP_NAMES[camp]}</h3>
-      <div class="camp-label">${fmt$(d.totalSpend)} spent · ${d.totalInstalls} installs · ${d.totalInstalls>0?fmt$(d.cpi)+' CPI':'no installs'}</div>`;
+      <div class="camp-label">${fmt$(d.totalSpend)} spent Â· ${d.totalInstalls} installs Â· ${d.totalInstalls>0?fmt$(d.cpi)+' CPI':'no installs'}</div>`;
 
     if(winners.length){
       html+=`<div class="report-block"><span class="report-block-title block-green">Top Performers</span>`;
-      winners.forEach(k=>{html+=`<div class="report-row"><span class="rkey">${k.keyword} <span class="badge ${k.matchType==='exact'?'badge-exact':'badge-broad'}">${k.matchType}</span></span><span class="rval">${k.installs} installs · ${fmt$(k.spend/k.installs)} CPI</span></div>`;});
+      winners.forEach(k=>{html+=`<div class="report-row"><span class="rkey">${k.keyword} <span class="badge ${k.matchType==='exact'?'badge-exact':'badge-broad'}">${k.matchType}</span></span><span class="rval">${k.installs} installs Â· ${fmt$(k.spend/k.installs)} CPI</span></div>`;});
       html+='</div>';
     }
     if(wasted.length){
@@ -421,7 +421,7 @@ function renderReport(){
     }
     if(raises.length){
       html+=`<div class="report-block"><span class="report-block-title block-green">Suggestions: Raise Bids</span>`;
-      raises.forEach(s=>{const newBid=(s.bid+0.3).toFixed(2);html+=`<div class="report-row"><span class="rkey">${s.keyword}<span class="suggest-pill suggest-green">${fmt$(s.bid)} → ${fmt$(newBid)}</span></span><span class="rval">${s.reason}</span></div>`;});
+      raises.forEach(s=>{const newBid=(s.bid+0.3).toFixed(2);html+=`<div class="report-row"><span class="rkey">${s.keyword}<span class="suggest-pill suggest-green">${fmt$(s.bid)} â†’ ${fmt$(newBid)}</span></span><span class="rval">${s.reason}</span></div>`;});
       html+='</div>';
     }
     if(pauses.length){
@@ -431,7 +431,7 @@ function renderReport(){
     }
     if(probes.length){
       html+=`<div class="report-block"><span class="report-block-title block-blue">0 Impressions (Probe)</span>`;
-      probes.forEach(k=>{html+=`<div class="report-row"><span class="rkey">${k.keyword}</span><span class="rval">bid ${fmt$(k.bid)} — raise to probe</span></div>`;});
+      probes.forEach(k=>{html+=`<div class="report-row"><span class="rkey">${k.keyword}</span><span class="rval">bid ${fmt$(k.bid)} â€” raise to probe</span></div>`;});
       html+='</div>';
     }
     html+='</div>';
@@ -458,3 +458,5 @@ renderOverview();
 </script>
 </body>
 </html>
+
+
