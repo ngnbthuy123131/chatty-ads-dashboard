@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -89,15 +89,15 @@ tbody td{padding:10px 12px;color:#ccc}
 </head>
 <body>
 <div class="header">
-  <h1>ðŸŸ¡ Chatty Ads Dashboard</h1>
-  <span>Sep 2025 â€“ Feb 2026 Â· 4 Campaigns Â· Historical View</span>
+  <h1>🟡 Chatty Ads Dashboard</h1>
+  <span>Sep 2025 – Feb 2026 · 4 Campaigns · Historical View</span>
 </div>
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('overview')">ðŸ“ˆ Overview</div>
-  <div class="tab" onclick="switchTab('campaign')">ðŸŽ¯ By Campaign</div>
-  <div class="tab" onclick="switchTab('keywords')">ðŸ”‘ Keywords</div>
-  <div class="tab" onclick="switchTab('changes')">ðŸ”„ Changes</div>
-  <div class="tab" onclick="switchTab('report')">ðŸ“‹ Report</div>
+  <div class="tab active" onclick="switchTab('overview')">📈 Overview</div>
+  <div class="tab" onclick="switchTab('campaign')">🎯 By Campaign</div>
+  <div class="tab" onclick="switchTab('keywords')">🔑 Keywords</div>
+  <div class="tab" onclick="switchTab('changes')">🔄 Changes</div>
+  <div class="tab" onclick="switchTab('report')">📋 Report</div>
 </div>
 <div class="content">
 
@@ -366,13 +366,13 @@ function renderReport(){
       <div style="background:#0f1117;border-radius:6px;height:8px;overflow:hidden">
         <div style="width:${pct}%;height:100%;background:${color};border-radius:6px;transition:width 0.5s"></div>
       </div>
-      <div style="font-size:11px;color:${color};margin-top:4px">${statusLabel} &nbsp;Â·&nbsp; ${d.totalInstalls} installs Â· ${fmt$(d.totalSpend)} spent</div>
+      <div style="font-size:11px;color:${color};margin-top:4px">${statusLabel} &nbsp;&middot;&nbsp; ${d.totalInstalls} installs &middot; ${fmt$(d.totalSpend)} spent</div>
     </div>`;
   });
 
   html+=`<div class="monthly-summary">
     <h2>Monthly Report â€” ${label}</h2>
-    <div class="period">${prevLabel?`vs ${prevLabel} previous month`:''} &nbsp;Â·&nbsp; Overall CPI target: <strong>$6â€“7</strong></div>
+    <div class="period">${prevLabel?`vs ${prevLabel} previous month`:''} &nbsp;&middot;&nbsp; Overall CPI target: <strong>$6â€“7</strong></div>
     <div style="margin-bottom:20px">
       <div class="summary-stat"><div class="sv">${fmt$(totalSpend)}</div><div class="sl">Total Spend</div></div>
       <div class="summary-stat"><div class="sv">${totalInstalls}</div><div class="sl">Total Installs</div></div>
@@ -407,11 +407,11 @@ function renderReport(){
 
     html+=`<div class="report-card">
       <h3>${CAMP_NAMES[camp]}</h3>
-      <div class="camp-label">${fmt$(d.totalSpend)} spent Â· ${d.totalInstalls} installs Â· ${d.totalInstalls>0?fmt$(d.cpi)+' CPI':'no installs'}</div>`;
+      <div class="camp-label">${fmt$(d.totalSpend)} spent &middot; ${d.totalInstalls} installs &middot; ${d.totalInstalls>0?fmt$(d.cpi)+' CPI':'no installs'}</div>`;
 
     if(winners.length){
       html+=`<div class="report-block"><span class="report-block-title block-green">Top Performers</span>`;
-      winners.forEach(k=>{html+=`<div class="report-row"><span class="rkey">${k.keyword} <span class="badge ${k.matchType==='exact'?'badge-exact':'badge-broad'}">${k.matchType}</span></span><span class="rval">${k.installs} installs Â· ${fmt$(k.spend/k.installs)} CPI</span></div>`;});
+      winners.forEach(k=>{html+=`<div class="report-row"><span class="rkey">${k.keyword} <span class="badge ${k.matchType==='exact'?'badge-exact':'badge-broad'}">${k.matchType}</span></span><span class="rval">${k.installs} installs &middot; ${fmt$(k.spend/k.installs)} CPI</span></div>`;});
       html+='</div>';
     }
     if(wasted.length){
