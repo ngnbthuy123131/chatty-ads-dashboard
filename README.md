@@ -98,12 +98,43 @@ All active campaigns are tracked. CSV files are stored locally under:
 
 **URL:** https://ngnbthuy123131.github.io/chatty-ads-dashboard/
 
-**How to read it:**
-- Select campaign and month from dropdowns
-- View spend, installs, CPI trend over time
-- Drill into keyword-level breakdown per month
+**Data refresh:** Updates automatically every Monday after the pipeline runs.
 
-**Data refresh:** Updates automatically every Monday after the pipeline runs. Data is always as fresh as the last weekly Shopify Partners export.
+### Tabs
+
+**📈 Overview**
+- KPI summary cards: Total Spend, Total Installs, Avg CPI, Total Clicks (all campaigns combined)
+- Chart: Monthly spend by campaign (stacked bar)
+- Chart: Monthly installs by campaign
+- Chart: CPI trend by campaign over time
+
+**🎯 By Campaign**
+- Select campaign + month from dropdowns
+- Monthly spend and installs/CPI charts for that campaign
+- Top keywords table: Keyword, Match type, Installs, Spend, CPI, Impressions, Bid, Top Countries
+
+**🔑 Keywords**
+- Search bar — filter keywords by name
+- Filter by campaign
+- Full keyword table: Keyword, Match type, Campaign, Best Month, Total Installs, Total Spend, Avg CPI, Bid History
+- Each keyword links to its performance history across all months
+
+**🔄 Changes**
+- Week-over-week changes: which keywords improved or declined
+- Highlights new keywords, dropped keywords, and bid changes
+
+### Ads Controls (in dashboard)
+Each keyword row shows:
+- **Bid** — current bid amount
+- **Match type** badge — Exact / Broad / Phrase
+- **Top Countries** — top 3 countries by installs for that keyword
+- **Best Month** — when the keyword performed best
+
+### Planned Enhancement: Search Volume
+Currently keyword data comes only from Shopify Partners (actual ad performance). A future improvement is to **link each keyword to external search volume data** (via Google Keyword Planner API or Ahrefs), so the dashboard can show:
+- Estimated monthly search volume per keyword
+- Opportunity score = search volume vs current impressions
+- Suggested keywords with high volume but not yet in campaigns
 
 ---
 
