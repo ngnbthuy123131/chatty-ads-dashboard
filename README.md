@@ -37,7 +37,7 @@ Shopify Partners
 **Tech stack:**
 - **Runtime:** Node.js (scripts in `/scripts`)
 - **Database:** Supabase (Postgres, REST API)
-- **Dashboard:** GitHub Pages — static HTML rebuilt from database weekly
+- **Dashboard:** GitHub Pages — ads tabs fetch live from Supabase on every page load (no rebuild needed)
 - **Notifications:** Slack API (Bot token)
 - **Email fetch:** Gmail API (OAuth)
 
