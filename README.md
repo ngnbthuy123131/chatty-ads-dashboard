@@ -29,7 +29,7 @@ Shopify Partners
       │         │
       │         │  sync-from-supabase.cjs
       │         ▼
-      │    history.json  →  index.html  →  GitHub Pages (live dashboard)
+      │    history.json  →  index.html  →  Chatty Listing Tracker (chatty-listing-tracker)
       │
       └──► Slack DM → Carla  (weekly analysis report)
 ```
@@ -94,47 +94,47 @@ All active campaigns are tracked. CSV files are stored locally under:
 
 ---
 
-## 5. Live Dashboard
+## 5. Live Dashboard — Chatty Listing Tracker
 
-**URL:** https://ngnbthuy123131.github.io/chatty-ads-dashboard/
+All ads data, keyword intelligence, and reporting flow into one central hub:
 
-**Data refresh:** Updates automatically every Monday after the pipeline runs.
+**🔗 URL:** https://ngnbthuy123131.github.io/chatty-listing-tracker/
 
-### Tabs
+**Data refresh:** Ads data updates automatically every Monday after the pipeline runs.
 
-**📈 Overview**
+### Relevant Tabs (Ads & Keywords)
+
+**🔥 Ads Overview**
 - KPI summary cards: Total Spend, Total Installs, Avg CPI, Total Clicks (all campaigns combined)
-- Chart: Monthly spend by campaign (stacked bar)
-- Chart: Monthly installs by campaign
-- Chart: CPI trend by campaign over time
+- Monthly spend by campaign (stacked bar chart)
+- Monthly installs and CPI trend by campaign
 
-**🎯 By Campaign**
-- Select campaign + month from dropdowns
-- Monthly spend and installs/CPI charts for that campaign
-- Top keywords table: Keyword, Match type, Installs, Spend, CPI, Impressions, Bid, Top Countries
+**🎯 Keywords**
+- Full keyword table with ads performance data: Impressions, Clicks, Installs, Spend, CPI, Avg Position
+- Filter by campaign and match type
+- Search bar to find specific keywords
+- Each keyword shows: Bid, Match type badge, Top Countries by installs, Best performing month
 
-**🔑 Keywords**
-- Search bar — filter keywords by name
-- Filter by campaign
-- Full keyword table: Keyword, Match type, Campaign, Best Month, Total Installs, Total Spend, Avg CPI, Bid History
-- Each keyword links to its performance history across all months
+**📋 Ads Report**
+- Campaign-level breakdown: select campaign + month
+- Top keywords per campaign with performance metrics
+- Week-over-week changes: improved keywords, declined keywords, new/dropped keywords
 
-**🔄 Changes**
-- Week-over-week changes: which keywords improved or declined
-- Highlights new keywords, dropped keywords, and bid changes
+**🔍 KW Advisor**
+- Keyword recommendations based on performance data
+- Identifies: high-spend / low-install keywords (wasted spend)
+- Surfaces: high-impression / low-click keywords (ad copy issues)
+- Bid suggestions based on historical CPI targets
+- *(Planned)* Link to external search volume (Google Keyword Planner / Ahrefs) — opportunity score = search volume vs current impressions
 
-### Ads Controls (in dashboard)
-Each keyword row shows:
-- **Bid** — current bid amount
-- **Match type** badge — Exact / Broad / Phrase
-- **Top Countries** — top 3 countries by installs for that keyword
-- **Best Month** — when the keyword performed best
-
-### Planned Enhancement: Search Volume
-Currently keyword data comes only from Shopify Partners (actual ad performance). A future improvement is to **link each keyword to external search volume data** (via Google Keyword Planner API or Ahrefs), so the dashboard can show:
-- Estimated monthly search volume per keyword
-- Opportunity score = search volume vs current impressions
-- Suggested keywords with high volume but not yet in campaigns
+### Other Tabs in the Tracker
+The Listing Tracker also covers the full Shopify App Store intelligence stack:
+- **Content** — app listing content audit
+- **Rankings** — keyword ranking positions
+- **Change Reports** — competitor listing changes (weekly monitoring)
+- **Competitor Intel** — side-by-side competitor comparison
+- **ASO Factors** — app store optimization scoring
+- **⚡ Optimizer** — listing improvement recommendations
 
 ---
 
