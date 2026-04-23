@@ -11,7 +11,9 @@ const CAMP_NAMES = {
   camp1: 'VN',
   camp2: 'Competitor',
   camp3: 'Broad 4 Countries',
-  camp4: 'Exact Other Countries'
+  camp4: 'Exact Other Countries',
+  camp5: 'FR',
+  camp6: 'Exact IN'
 };
 
 const MONTH_MAP = {
@@ -52,7 +54,7 @@ const files = fs.readdirSync(CSV_DIR).filter(f => f.endsWith('.csv'));
 console.log(`Processing ${files.length} files...`);
 
 // Skip duplicate mislabeled file
-const SKIP = ['camp1_march_2026'];
+const SKIP = ['camp1_march_2026---'];
 
 for (const file of files) {
   if (SKIP.some(s => file.startsWith(s))) {

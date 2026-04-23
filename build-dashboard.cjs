@@ -4,8 +4,8 @@ const path = require('path');
 const history = JSON.parse(fs.readFileSync(path.join(__dirname, 'ads-data', 'history.json'), 'utf8'));
 const dataJson = JSON.stringify(history);
 
-const MONTHS_ORDER = ['2025-09','2025-10','2025-11','2025-12','2026-01','2026-02'];
-const MONTH_LABELS = {'2025-09':"Sep '25",'2025-10':"Oct '25",'2025-11':"Nov '25",'2025-12':"Dec '25",'2026-01':"Jan '26",'2026-02':"Feb '26"};
+const MONTHS_ORDER = ['2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03'];
+const MONTH_LABELS = {'2025-09':"Sep '25",'2025-10':"Oct '25",'2025-11':"Nov '25",'2025-12':"Dec '25",'2026-01':"Jan '26",'2026-02':"Feb '26",'2026-03':"Mar '26"};
 
 const html = `<!DOCTYPE html>
 <html lang="en">
@@ -54,6 +54,8 @@ const html = `<!DOCTYPE html>
   .badge-camp2{background:#FFD20022;color:#FFD200;border:1px solid #FFD200}
   .badge-camp3{background:#00C9A722;color:#00ffcc;border:1px solid #00C9A7}
   .badge-camp4{background:#6C5CE722;color:#b88fff;border:1px solid #6C5CE7}
+  .badge-camp5{background:#FF979722;color:#FF9797;border:1px solid #FF9797}
+  .badge-camp6{background:#20B2AA22;color:#20B2AA;border:1px solid #20B2AA}
   .delta-pos{color:#00e676}
   .delta-neg{color:#ff5252}
   .delta-neu{color:#888}
@@ -74,7 +76,7 @@ const html = `<!DOCTYPE html>
 
 <div class="header">
   <h1>🟡 Chatty Ads Dashboard</h1>
-  <span>Sep 2025 – Feb 2026 · 4 Campaigns · Historical View</span>
+  <span>Sep 2025 – Mar 2026 · 6 Campaigns · Historical View</span>
 </div>
 
 <div class="tabs">
@@ -105,6 +107,8 @@ const html = `<!DOCTYPE html>
       <option value="camp3">Broad 4 Countries</option>
       <option value="camp4">Exact Other Countries</option>
       <option value="camp1">VN</option>
+      <option value="camp5">FR</option>
+      <option value="camp6">Exact IN</option>
     </select>
     <label>Month:</label>
     <select id="campMonthSelect" onchange="renderCampaignKeywords()">
@@ -130,6 +134,8 @@ const html = `<!DOCTYPE html>
       <option value="camp2">Competitor</option>
       <option value="camp3">Broad 4 Countries</option>
       <option value="camp4">Exact Other Countries</option>
+      <option value="camp5">FR</option>
+      <option value="camp6">Exact IN</option>
     </select>
   </div>
   <div class="table-wrap"><table><thead><tr><th>Keyword</th><th>Match</th><th>Campaign</th><th>Best Month</th><th>Total Installs</th><th>Total Spend</th><th>Avg CPI</th><th>Bid History</th></tr></thead><tbody id="kwBody"></tbody></table></div>
@@ -143,7 +149,9 @@ const html = `<!DOCTYPE html>
       <option value="2025-09">Sep '25</option>
       <option value="2025-10">Oct '25</option>
       <option value="2025-11">Nov '25</option>
-      <option value="2025-12" selected>Dec '25</option>
+      <option value="2025-12">Dec '25</option>
+      <option value="2026-01">Jan '26</option>
+      <option value="2026-02" selected>Feb '26</option>
     </select>
     <span style="color:#888">vs</span>
     <select id="monthB" onchange="renderChanges()">
@@ -151,7 +159,8 @@ const html = `<!DOCTYPE html>
       <option value="2025-11">Nov '25</option>
       <option value="2025-12">Dec '25</option>
       <option value="2026-01">Jan '26</option>
-      <option value="2026-02" selected>Feb '26</option>
+      <option value="2026-02">Feb '26</option>
+      <option value="2026-03" selected>Mar '26</option>
     </select>
   </div>
   <div id="changesContent"></div>
@@ -163,10 +172,10 @@ const html = `<!DOCTYPE html>
 const RAW = ${dataJson};
 const MONTHS = ${JSON.stringify(MONTHS_ORDER)};
 const MONTH_LABELS = ${JSON.stringify(MONTH_LABELS)};
-const CAMPS = ['camp1','camp2','camp3','camp4'];
-const CAMP_NAMES = {camp1:'VN',camp2:'Competitor',camp3:'Broad 4 Countries',camp4:'Exact Other Countries'};
-const COLORS = {camp1:'#FF6363',camp2:'#FFD200',camp3:'#00C9A7',camp4:'#6C5CE7'};
-const CAMP_BADGE = {camp1:'badge-camp1',camp2:'badge-camp2',camp3:'badge-camp3',camp4:'badge-camp4'};
+const CAMPS = ['camp1','camp2','camp3','camp4','camp5','camp6'];
+const CAMP_NAMES = {camp1:'VN',camp2:'Competitor',camp3:'Broad 4 Countries',camp4:'Exact Other Countries',camp5:'FR',camp6:'Exact IN'};
+const COLORS = {camp1:'#FF6363',camp2:'#FFD200',camp3:'#00C9A7',camp4:'#6C5CE7',camp5:'#FF9797',camp6:'#20B2AA'};
+const CAMP_BADGE = {camp1:'badge-camp1',camp2:'badge-camp2',camp3:'badge-camp3',camp4:'badge-camp4',camp5:'badge-camp5',camp6:'badge-camp6'};
 
 let charts = {};
 function destroyChart(id) { if(charts[id]){charts[id].destroy();delete charts[id];} }
@@ -202,7 +211,7 @@ function renderOverview() {
   const avgCPI = totalInstalls > 0 ? totalSpend/totalInstalls : 0;
 
   document.getElementById('kpi-row').innerHTML = \`
-    <div class="kpi-card"><div class="label">Total Spend</div><div class="value">\${fmt$(totalSpend)}</div><div class="sub">Sep '25 – Feb '26</div></div>
+    <div class="kpi-card"><div class="label">Total Spend</div><div class="value">\${fmt$(totalSpend)}</div><div class="sub">Sep '25 – Mar '26</div></div>
     <div class="kpi-card"><div class="label">Total Installs</div><div class="value">\${fmtN(totalInstalls)}</div><div class="sub">All campaigns</div></div>
     <div class="kpi-card"><div class="label">Avg CPI</div><div class="value">\${fmt$(avgCPI)}</div><div class="sub">All campaigns combined</div></div>
     <div class="kpi-card"><div class="label">Best Month</div><div class="value">\${MONTH_LABELS[bestMonth]||'-'}</div><div class="sub">\${bestMonthInstalls} installs</div></div>
